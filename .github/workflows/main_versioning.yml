@@ -32,4 +32,4 @@ jobs:
         MINOR_STRING_TOKEN: "#MINOR"
         PATCH_STRING_TOKEN: "#PATCH"
         NONE_STRING_TOKEN: "#NONE"
-        BRANCH_HISTORY: last
+        BRANCH_HISTORY: compare
