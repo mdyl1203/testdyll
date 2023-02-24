@@ -33,15 +33,3 @@ jobs:
         PATCH_STRING_TOKEN: "#PATCH"
         NONE_STRING_TOKEN: "#NONE"
         BRANCH_HISTORY: last
-
-    - name: Upload new backend version
-      run: |
-        latest_tag_version=$(git for-each-ref --sort=-v:refname --format '%(refname:lstrip=2)' | grep -E "^v?[0-9]+\.[0-9]+\.[0-9]+$" | head -n 1)
-        echo "Latest backend version: ${latest_tag_version}"
-        package_name="sonda-backend-${latest_tag_version}"
-        zip -r "${package_name}" . -x ".*"
-        aws configure set region "eu-west-1"
-        aws configure set aws_access_key_id "${{ secrets.AWS_ACCESS_KEY_ID }}"
-        aws configure set aws_secret_access_key "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
-        aws s3api put-object --bucket sonda-backend --key "${package_name}.zip" --body "${package_name}"
-        echo "Package uploaded to s3: ${package_name}"
